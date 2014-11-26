@@ -1,0 +1,10 @@
+
+November 26,2014
+
+Hariharan
+
+- Wrote functions to parse data files, check precision, recall, f_scores.
+- Used K-NN classifier on the entire dataset and for distinguishing between Dynamic and Non-Dynamic activities. 
+- Mean F-score of 99% was recorded for distinguishing dynamic and non-dynamic activities
+ 
+
