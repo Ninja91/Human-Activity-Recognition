@@ -1,3 +1,5 @@
+# Author "Keerthi Raj Nagaraja"
+
 # Importing libraries
 from math import *
 from numpy import *

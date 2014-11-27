@@ -3,19 +3,12 @@ from sklearn import neighbors, datasets
 from collections import defaultdict
 
 ###################################################################################
-
 ## Given a file name, returns the parsed file in the form of an array ##
-
 def parseFile( file_name ):
-
 	f = open(file_name)
-
 	featureArray = []
-
 	lines = f.readlines()
-
 	for line in lines:
-
 		feature_length = len(line.split(" "))
 
 		raw_feature = line.split(" ")
@@ -35,7 +28,6 @@ def parseFile( file_name ):
 ###################################################################################
 
 def checkAccuracy( original , predicted , labels ):
-	
 	TP = defaultdict(list)
 	FP = defaultdict(list)
 	FN = defaultdict(list)
@@ -68,9 +60,7 @@ def checkAccuracy( original , predicted , labels ):
 
 
 ###################################################################################
-
 def convertLabel( labels ):
-
 	dynamic = []
 
 	for label in labels:
@@ -84,5 +74,5 @@ def convertLabel( labels ):
 	return np.asarray(dynamic)
 
 ###################################################################################
-
-
+def getDataSubset(input_labels, RequiredLabels):
+	
