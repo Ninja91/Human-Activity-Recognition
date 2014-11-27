@@ -107,3 +107,28 @@ def createConfusionMatrix(predictedYLabels,originalYLabels,labelList):
         else:
             confusionMatrix[labelList.index(originalYLabels[i]),labelList.index(predictedYLabels[i])] = confusionMatrix[labelList.index(originalYLabels[i]),labelList.index(predictedYLabels[i])] + 1
     print confusionMatrix
+
+
+#############################################################################
+
+#This function returns the Mahalanobis distance between two given class 1 TO class 2 with respect to class 1's variance (i.e.) Mahalanobis Distance). NOTE: labels is a LIST containing only TWO labels.
+
+def getMahalanobisDistance( X_train, Y_train, labels ):
+
+	labelA = labels[0]
+	labelB = labels[1]
+
+	X_A , Y_A = getDataSubset(X_train, Y_train, [labelA])
+	mean_A = np.mean(X_A,axis = 0)
+	cov_A = np.cov(X_A,rowvar = 0)
+
+	X_B , Y_B = getDataSubset(X_train, Y_train, [labelB])
+	mean_B = np.mean(X_B,axis = 0)
+	cov_B = np.cov(X_B,rowvar = 0)
+
+	return scipy.spatial.distance.mahalanobis(mean_A, mean_B, cov_A) 
+	
+#############################################################################
+
+#############################################################################
+
