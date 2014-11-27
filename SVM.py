@@ -27,13 +27,13 @@ Y_train=common.convertLabel(Y_train)
 Y_test=common.convertLabel(Y_test)
 print len(X_train), len(Y_train)
 print len(X_test), len(Y_test), 
-
+print X_test.flags
 #X_dynamic, Y_dynamic=common.getDataSubset(X_train, Y_train, [1,2,3])
 #X_nondynamic, Y_
 
 #print len(X_sub_dynamic), len(Y_sub_dynamic)
 
-clf = svm.LinearSVC()
+clf = svm.SVC(cache_size=1000)
 clf.fit(X_train, Y_train)
 Y_predict=clf.predict(X_test)
 print type(Y_predict), size(Y_predict), Y_predict
