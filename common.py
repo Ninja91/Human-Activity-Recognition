@@ -1,9 +1,13 @@
+## This file contains some data handling routines ##
+## Authors: Hariharan Seshadri, Keerthi Nagaraj, Nitin Jain ##
+
 import numpy as np
 from sklearn import neighbors, datasets
 from collections import defaultdict
 
 ###################################################################################
 ## Given a file name, returns the parsed file in the form of an array ##
+
 def parseFile( file_name ):
 	f = open(file_name)
 	featureArray = []
@@ -26,6 +30,7 @@ def parseFile( file_name ):
 	return np.asarray( featureArray )
 
 ###################################################################################
+## Given two LISTS- original and predicted , returns the precision, accuracy, fscore
 
 def checkAccuracy( original , predicted , labels ):
 	TP = defaultdict(list)
@@ -60,6 +65,9 @@ def checkAccuracy( original , predicted , labels ):
 
 
 ###################################################################################
+
+## Distinguishes labels as Dynamic[1]/Non-Dynamic[0] ## 
+
 def convertLabel( labels ):
 	dynamic = []
 
