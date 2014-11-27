@@ -90,5 +90,5 @@ def getDataSubset(inputData, inputLabels, RequiredLabels):
 		if inputLabels[loopVar] in RequiredLabels:
 			subData.append(inputData[loopVar])
 			subLabels.append(inputLabels[loopVar])
-	return subData, subLabels
+	return np.asarray(subData), np.asarray(subLabels)
 ###################################################################################

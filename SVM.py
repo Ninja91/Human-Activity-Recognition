@@ -15,44 +15,33 @@ from matplotlib import pyplot as plt
 set_printoptions(suppress=True)
 
 filename='../UCI HAR Dataset/' # Dataset Used
-#----------------------------------------------------------------------------------------------#
-#This function reads the manual correspondences saved in a text file.
-def readmatches(filename):    
-    f = open(filename).read()
-    rows = []
-    for line in f.split('\n'):
-        rows.append(line.split(' '))
-    rows.pop()
-    #for loopVar1 in range(0, len(rows)):
-    #	for loopVar2 in range(0, len(rows[loopVar1])):
-    #		rows[loopVar1][loopVar2]=float(rows[loopVar1][loopVar2])
-    return rows 
-
 #--------------------------------------------------------------------------------------------#
-#This function saves the homographies to a text file 
-def save_matrix(filename, H):
-	fo = open(filename, 'w', 0)
-	for loopVar1 in range(H.shape[0]):
-		for loopVar2 in range(H.shape[1]):
-			fo.write(str(H[loopVar1, loopVar2]))
-			if loopVar2!=H.shape[1]-1:		
-				fo.write('\t')
-		if loopVar1!=H.shape[0]-1:
-			fo.write('\n')
-	fo.close()	
-		
+
 #---------------------------------------------------------------------------------------------#
 
-X_train=common.parseFile( filename+'train/X_train.txt')
-Y_train=common.parseFile( filename+'train/y_train.txt')
-Y_train = Y_train.flatten()
+X_train=common.parseFile(filename+'train/X_train.txt')
+Y_train=(common.parseFile(filename+'train/y_train.txt')).flatten()
+X_test=common.parseFile(filename+'test/X_test.txt')
+Y_test=(common.parseFile(filename+'test/y_test.txt')).flatten()
+Y_train=common.convertLabel(Y_train)
+Y_test=common.convertLabel(Y_test)
 print len(X_train), len(Y_train)
-X_sub_dynamic, Y_sub_dynamic=common.getDataSubset(X_train, Y_train, [1,2,3,4,5,6])
-print len(X_sub_dynamic), len(Y_sub_dynamic)
-#X = [[0, 0], [1, 1]]
-#y = [0, 1]
-#clf = svm.SVC()
-#clf.fit(X, y)
+print len(X_test), len(Y_test), 
+
+#X_dynamic, Y_dynamic=common.getDataSubset(X_train, Y_train, [1,2,3])
+#X_nondynamic, Y_
+
+#print len(X_sub_dynamic), len(Y_sub_dynamic)
+
+clf = svm.LinearSVC()
+clf.fit(X_train, Y_train)
+Y_predict=clf.predict(X_test)
+print type(Y_predict), size(Y_predict), Y_predict
+prec, rec, f_score=common.checkAccuracy(Y_test, Y_predict, [0,1])
+print prec
+print rec
+print f_score
+print clf.n_support_
 #SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0, degree=3,
 #gamma=0.0, kernel='rbf', max_iter=-1, probability=False, random_state=None,
 #shrinking=True, tol=0.001, verbose=False)
