@@ -15,4 +15,8 @@ Keerthi
 - SVM Linear gave better performance than RBF for full dataset
 - SVM Linear gave 100% performance for dynamic-nondynamic classification problem 
  
+ Nitin
 
+ -Tested LDA classifier with full dataset and dynamic-nondynamic datasets as well
+ -Much better gains seen in performance when LDA classifier uses dynamic and nondynamic dataset.
+ - LDA gives 100% performance on Dynamic dataset
