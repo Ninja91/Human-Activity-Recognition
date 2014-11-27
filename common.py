@@ -74,5 +74,13 @@ def convertLabel( labels ):
 	return np.asarray(dynamic)
 
 ###################################################################################
-def getDataSubset(input_labels, RequiredLabels):
-	
+# This function takes in input 2D array of inputData(X) and 1D array of inputLabels(Y) and returns subset of those data which belong to requiredLabels(Ex: [1,4,5]). Required Labels is a 1D list. Returns 2D array of subData (X'), 1D array of subLabels(Y')
+def getDataSubset(inputData, inputLabels, RequiredLabels): 
+	subData=[]
+	subLabels=[]
+	for loopVar in range(len(inputLabels)):
+		if inputLabels[loopVar] in RequiredLabels:
+			subData.append(inputData[loopVar])
+			subLabels.append(inputLabels[loopVar])
+	return subData, subLabels
+###################################################################################

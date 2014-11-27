@@ -14,7 +14,7 @@ from matplotlib import pyplot as plt
 # Prints the numbers in float instead of scientific format
 set_printoptions(suppress=True)
 
-filename='UCI HAR Dataset/' # Dataset Used
+filename='../UCI HAR Dataset/' # Dataset Used
 #----------------------------------------------------------------------------------------------#
 #This function reads the manual correspondences saved in a text file.
 def readmatches(filename):    
@@ -42,12 +42,18 @@ def save_matrix(filename, H):
 	fo.close()	
 		
 #---------------------------------------------------------------------------------------------#
-X = [[0, 0], [1, 1]]
-y = [0, 1]
-clf = svm.SVC()
-clf.fit(X, y)
-SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0, degree=3,
-gamma=0.0, kernel='rbf', max_iter=-1, probability=False, random_state=None,
-shrinking=True, tol=0.001, verbose=False)
-clf.predict([[2., 2.]])
 
+X_train=common.parseFile( filename+'train/X_train.txt')
+Y_train=common.parseFile( filename+'train/y_train.txt')
+Y_train = Y_train.flatten()
+print len(X_train), len(Y_train)
+X_sub_dynamic, Y_sub_dynamic=common.getDataSubset(X_train, Y_train, [1,2,3,4,5,6])
+print len(X_sub_dynamic), len(Y_sub_dynamic)
+#X = [[0, 0], [1, 1]]
+#y = [0, 1]
+#clf = svm.SVC()
+#clf.fit(X, y)
+#SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0, degree=3,
+#gamma=0.0, kernel='rbf', max_iter=-1, probability=False, random_state=None,
+#shrinking=True, tol=0.001, verbose=False)
+#clf.predict([[2., 2.]])
