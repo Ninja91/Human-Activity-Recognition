@@ -142,18 +142,27 @@ def getDistribution( X_train, Y_train, label ):
 	
 #############################################################################
 
-#This function returns the the input array whose entries are raised by power 'k'
+#This function returns the the input array whose entries are raised by power list 'k'. 
 
-def getPowerK( X, k ):
+def getPowerK( X_features, k):
 
-	X_new = []
+	X_features_new = []
 
-	for x in X:
-		X_new.append( np.power(x,k) )
+	for x_feature in X_features:
+		x_feature_new = []
 
-	return np.asarray(X_new)
+		for power in k:
+			for x_feature_dimension in x_feature:
+
+				x_feature_new.append( np.power(x_feature_dimension,power) )
+
+		X_features_new.append( np.asarray(x_feature_new) )				
+
+
+	return np.asarray(X_features_new)
 	
 #############################################################################
+
 
 
 
