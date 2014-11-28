@@ -9,6 +9,7 @@ from numpy.linalg import *
 import time
 import ctypes
 from sklearn import *
+from collections import defaultdict
 import common
 from matplotlib import pyplot as plt
 # Prints the numbers in float instead of scientific format
@@ -35,10 +36,17 @@ X_nondynamic_train, Y_nondynamic_train=common.getDataSubset(X_train, Y_train, [4
 X_dynamic_test, Y_dynamic_test=common.getDataSubset(X_test, Y_test, [1,2,3])
 X_nondynamic_test, Y_nondynamic_test=common.getDataSubset(X_test, Y_test, [4,5])
 
+X_nondynamic_train_6, Y_nondynamic_train_6=common.getDataSubset(X_train, Y_train, [6])
+X_nondynamic_test_6, Y_nondynamic_test_6=common.getDataSubset(X_test, Y_test, [6])
+
 print len(X_dynamic_train), len(Y_dynamic_train), Y_dynamic_train
 print len(X_nondynamic_train), len(Y_nondynamic_train), Y_nondynamic_train
 
-clf = svm.SVC(kernel='poly', degree=1)
+#class_weights=dict()
+#class_weights[1]=1.0
+#class_weights[2]=1.0
+#class_weights[3]=1.0
+'''clf = svm.LinearSVC(multi_class='crammer_singer')
 clf.fit(X_dynamic_train, Y_dynamic_train)
 
 #clf = neighbors.KNeighborsClassifier(50, weights='distance')
@@ -54,7 +62,10 @@ print common.createConfusionMatrix(Y_predict_dynamic, Y_dynamic_test, [1,2,3])
 
 #clf = neighbors.KNeighborsClassifier(1, weights='distance')
 #clf.fit(X_nondynamic_train, Y_nondynamic_train)
-clf = svm.SVC(kernel='poly', degree=1)
+class_weights=dict()
+class_weights[4]=2.5
+class_weights[5]=1.0
+clf = svm.LinearSVC(multi_class='crammer_singer', class_weight=class_weights)
 clf.fit(X_nondynamic_train, Y_nondynamic_train)
 Y_predict_nondynamic=clf.predict(X_nondynamic_test)
 print type(Y_predict_nondynamic), size(Y_predict_nondynamic), Y_predict_nondynamic

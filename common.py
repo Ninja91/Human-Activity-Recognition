@@ -69,17 +69,18 @@ def checkAccuracy( original , predicted , labels ):
 
 ## Distinguishes labels as Dynamic[1]/Non-Dynamic[0] ## 
 
-def convertLabel( labels ):
+def convertLabel(labels, posLabels, Neglabels):
 	dynamic = []
 
 	for label in labels:
 
-		if label == 1 or label == 2 or label == 3:
+		if label in posLabels:
 			dynamic.append( 1 )
 			 
-		elif label == 4 or label == 5 or label == 6:
+		elif label in Neglabels:
 			dynamic.append( 0 )
-
+		else
+			print "Unknown Label: Good Gawd :)"
 	return np.asarray(dynamic)
 
 ###################################################################################
@@ -195,8 +196,3 @@ def getPowerK( X_features, k):
 	return np.asarray(X_features_new)
 	
 #############################################################################
-
-
-
-
-
