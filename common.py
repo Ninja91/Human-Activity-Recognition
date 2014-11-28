@@ -144,15 +144,15 @@ def getDistribution( X_train, Y_train, label ):
 
 #############################################################################
 
-#This function returns the sample weights based on HOW CLOSE THE SAMPLE IS TO THE MEAN OF IT'S CLASS
+#This function returns the sample weights based on HOW CLOSE THE SAMPLE IS TO THE MEAN OF IT'S CLASS , "labels" is a LIST that specifies the labels in Y_train
 
-def getSampleWeights( X_train, Y_train):
+def getSampleWeights( X_train, Y_train , labels):
 	
 	sample_weights = []
 	mean = []
 	cov = []
 
-	for i in range(1,7):
+	for i in labels:
 		
 		mean_A , cov_A = getDistribution( X_train , Y_train , i )
 
@@ -163,8 +163,9 @@ def getSampleWeights( X_train, Y_train):
 		
 	for i in xrange( len(X_train) ):
 
-		this_mean = mean[ int(Y_train[i]) -1 ]
-		this_cov = cov[ int(Y_train[i]) -1 ]
+		index = labels.index( int(Y_train[i]) )
+		this_mean = mean[ index ]
+		this_cov = cov[ index ]
 
 		weight = 	scipy.spatial.distance.mahalanobis(X_train[i], this_mean , this_cov)	
 
