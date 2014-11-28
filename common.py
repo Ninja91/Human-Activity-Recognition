@@ -130,3 +130,16 @@ def getMahalanobisDistance( X_train, Y_train, labels ):
 	
 #############################################################################
 
+#This function returns the Mean and Covariance of tha data of a particular label. 'label' requires a single number
+
+def getDistribution( X_train, Y_train, label ):
+
+	X_A , Y_A = getDataSubset(X_train, Y_train, label)
+	mean_A = np.mean(X_A,axis = 0)
+	cov_A = np.cov(X_A,rowvar = 0)
+
+	return mean_A,cov_A 
+	
+#############################################################################
+
+
