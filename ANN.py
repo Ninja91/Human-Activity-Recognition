@@ -1,11 +1,8 @@
 #Author: Nitin A Jain
 
 import numpy as np
-from sklearn.lda import LDA
-from sklearn import tree
-from sklearn import ensemble
-from sklearn import svm
-from sklearn import naive_bayes
+from sklearn.neural_network import BernoulliRBM
+from MultiLayerPerceptron import *
 import common
 
 def LDA_onFullDataset():
@@ -18,7 +15,7 @@ def LDA_onFullDataset():
     YFullTest = common.parseFile('../UCI HAR Dataset/test/y_test.txt')
 
     #Fitting data using LDA classifier
-    clf = LDA()
+    clf = MLPClassifier()#BernoulliRBM()
     clf.fit(XFull, YFull.flatten())
 
     #Testing the results
@@ -41,7 +38,7 @@ def LDA_onNonDynamicData():
 
     #Fitting data using LDA classifier
 
-    clf = LDA()
+    clf = BernoulliRBM()
     clf.fit(X_NonDynamic, Y_NonDynamic.flatten())
 
     precision,recall,fscore = common.checkAccuracy(clf.predict(X_NonDynamicTest),Y_NonDynamicTest,[4,5,6])
@@ -55,7 +52,7 @@ def LDA_onNonDynamicData():
     print len(X_DynamicTest),len(Y_DynamicTest)
 
     #Fitting data using LDA classifier
-    clf = LDA()
+    clf = BernoulliRBM()
     clf.fit(X_Dynamic, Y_Dynamic.flatten())
 
     precision,recall,fscore = common.checkAccuracy(clf.predict(X_DynamicTest),Y_DynamicTest,[1,2,3])

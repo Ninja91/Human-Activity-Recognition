@@ -8,7 +8,7 @@ from sklearn import svm
 from sklearn import naive_bayes
 import common
 
-def LDA_onFullDataset():
+def Adaboost_onFullDataset():
     #Parsing Full training dataset
     XFull = common.parseFile('../UCI HAR Dataset/train/X_train.txt')
     YFull = common.parseFile('../UCI HAR Dataset/train/y_train.txt')
@@ -17,15 +17,15 @@ def LDA_onFullDataset():
     XFullTest = common.parseFile('../UCI HAR Dataset/test/X_test.txt')
     YFullTest = common.parseFile('../UCI HAR Dataset/test/y_test.txt')
 
-    #Fitting data using LDA classifier
-    clf = LDA()
+    #Fitting data using Adaboost classifier
+    clf = ensemble.AdaBoostClassifier(n_estimators = 300)
     clf.fit(XFull, YFull.flatten())
 
     #Testing the results
     precision,recall,fscore = common.checkAccuracy(clf.predict(XFullTest),YFullTest,[1,2,3,4,5,6])
-    print fscore
+    print "For the whole dataset",fscore
 
-def LDA_onNonDynamicData():
+def Adaboost_onNonDynamicData():
     #Parsing Full training dataset
     XFull = common.parseFile('../UCI HAR Dataset/train/X_train.txt')
     YFull = common.parseFile('../UCI HAR Dataset/train/y_train.txt')
@@ -39,14 +39,15 @@ def LDA_onNonDynamicData():
     #Getting the dataset associated with Non-Dynamic Activities on testing
     X_NonDynamicTest,Y_NonDynamicTest = common.getDataSubset(XFullTest,YFullTest.flatten(),[4,5,6])
 
-    #Fitting data using LDA classifier
+    #Fitting data using Adaboost classifier
+    for i in [50,100,200,300,500]:
+        clf = ensemble.AdaBoostClassifier(n_estimators = i)
+        clf.fit(X_NonDynamic, Y_NonDynamic.flatten())
 
-    clf = LDA()
-    clf.fit(X_NonDynamic, Y_NonDynamic.flatten())
-
-    precision,recall,fscore = common.checkAccuracy(clf.predict(X_NonDynamicTest),Y_NonDynamicTest,[4,5,6])
-    common.createConfusionMatrix(clf.predict(X_NonDynamicTest).flatten(),Y_NonDynamicTest.flatten(),[4,5,6])
-    print fscore
+        precision,recall,fscore = common.checkAccuracy(clf.predict(X_NonDynamicTest),Y_NonDynamicTest,[4,5,6])
+        print "For the NonDynamic dataset with n_estimators = ",i
+        common.createConfusionMatrix(clf.predict(X_NonDynamicTest).flatten(),Y_NonDynamicTest.flatten(),[4,5,6])
+        print fscore
 
     #Getting the dataset associated with Dynamic Activities on training 
     X_Dynamic,Y_Dynamic = common.getDataSubset(XFull,YFull.flatten(),[1,2,3])
@@ -54,8 +55,8 @@ def LDA_onNonDynamicData():
     X_DynamicTest,Y_DynamicTest = common.getDataSubset(XFullTest,YFullTest.flatten(),[1,2,3])
     print len(X_DynamicTest),len(Y_DynamicTest)
 
-    #Fitting data using LDA classifier
-    clf = LDA()
+    #Fitting data using Adaboost classifier
+    clf = ensemble.AdaBoostClassifier(n_estimators = 300)
     clf.fit(X_Dynamic, Y_Dynamic.flatten())
 
     precision,recall,fscore = common.checkAccuracy(clf.predict(X_DynamicTest),Y_DynamicTest,[1,2,3])
@@ -64,5 +65,5 @@ def LDA_onNonDynamicData():
     print fscore
 
 if __name__=='__main__':
-    LDA_onFullDataset()
-    LDA_onNonDynamicData()
+    #Adaboost_onFullDataset()
+    Adaboost_onNonDynamicData()
