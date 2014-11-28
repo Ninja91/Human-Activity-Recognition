@@ -79,7 +79,7 @@ def convertLabel(labels, posLabels, Neglabels):
 			 
 		elif label in Neglabels:
 			dynamic.append( 0 )
-		else
+		else:
 			print "Unknown Label: Good Gawd :)"
 	return np.asarray(dynamic)
 
