@@ -106,7 +106,7 @@ def createConfusionMatrix(predictedYLabels,originalYLabels,labelList):
             print 'Error'
         else:
             confusionMatrix[labelList.index(originalYLabels[i]),labelList.index(predictedYLabels[i])] = confusionMatrix[labelList.index(originalYLabels[i]),labelList.index(predictedYLabels[i])] + 1
-    print confusionMatrix
+    return confusionMatrix
 
 
 #############################################################################
@@ -128,7 +128,5 @@ def getMahalanobisDistance( X_train, Y_train, labels ):
 
 	return scipy.spatial.distance.mahalanobis(mean_A, mean_B, cov_A) 
 	
-#############################################################################
-
 #############################################################################
 

@@ -8,7 +8,7 @@ from operator import *
 from numpy.linalg import *
 import time
 import ctypes
-from sklearn import svm
+from sklearn import *
 import common
 from matplotlib import pyplot as plt
 # Prints the numbers in float instead of scientific format
@@ -23,25 +23,49 @@ X_train=common.parseFile(filename+'train/X_train.txt')
 Y_train=(common.parseFile(filename+'train/y_train.txt')).flatten()
 X_test=common.parseFile(filename+'test/X_test.txt')
 Y_test=(common.parseFile(filename+'test/y_test.txt')).flatten()
-Y_train=common.convertLabel(Y_train)
-Y_test=common.convertLabel(Y_test)
+#Y_train=common.convertLabel(Y_train)
+#Y_test=common.convertLabel(Y_test)
 print len(X_train), len(Y_train)
 print len(X_test), len(Y_test), 
-print X_test.flags
-#X_dynamic, Y_dynamic=common.getDataSubset(X_train, Y_train, [1,2,3])
-#X_nondynamic, Y_
+#print X_test.flags
 
-#print len(X_sub_dynamic), len(Y_sub_dynamic)
+X_dynamic_train, Y_dynamic_train=common.getDataSubset(X_train, Y_train, [1,2,3])
+X_nondynamic_train, Y_nondynamic_train=common.getDataSubset(X_train, Y_train, [4,5])
 
-clf = svm.SVC(cache_size=1000)
-clf.fit(X_train, Y_train)
-Y_predict=clf.predict(X_test)
-print type(Y_predict), size(Y_predict), Y_predict
-prec, rec, f_score=common.checkAccuracy(Y_test, Y_predict, [0,1])
+X_dynamic_test, Y_dynamic_test=common.getDataSubset(X_test, Y_test, [1,2,3])
+X_nondynamic_test, Y_nondynamic_test=common.getDataSubset(X_test, Y_test, [4,5])
+
+print len(X_dynamic_train), len(Y_dynamic_train), Y_dynamic_train
+print len(X_nondynamic_train), len(Y_nondynamic_train), Y_nondynamic_train
+
+clf = svm.SVC(kernel='poly', degree=1)
+clf.fit(X_dynamic_train, Y_dynamic_train)
+
+#clf = neighbors.KNeighborsClassifier(50, weights='distance')
+#clf.fit(X_dynamic_train, Y_dynamic_train)
+Y_predict_dynamic=clf.predict(X_dynamic_test)
+print type(Y_predict_dynamic), size(Y_predict_dynamic), Y_predict_dynamic
+prec, rec, f_score=common.checkAccuracy(Y_dynamic_test, Y_predict_dynamic, [1,2,3])
 print prec
 print rec
 print f_score
-print clf.n_support_
+print common.createConfusionMatrix(Y_predict_dynamic, Y_dynamic_test, [1,2,3])
+#print clf.n_support_'''
+
+#clf = neighbors.KNeighborsClassifier(1, weights='distance')
+#clf.fit(X_nondynamic_train, Y_nondynamic_train)
+clf = svm.SVC(kernel='poly', degree=1)
+clf.fit(X_nondynamic_train, Y_nondynamic_train)
+Y_predict_nondynamic=clf.predict(X_nondynamic_test)
+print type(Y_predict_nondynamic), size(Y_predict_nondynamic), Y_predict_nondynamic
+prec, rec, f_score=common.checkAccuracy(Y_nondynamic_test, Y_predict_nondynamic, [4,5])
+print prec
+print rec
+print f_score
+print common.createConfusionMatrix(Y_predict_nondynamic, Y_nondynamic_test, [4,5])
+#print clf.n_support_
+
+
 #SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0, degree=3,
 #gamma=0.0, kernel='rbf', max_iter=-1, probability=False, random_state=None,
 #shrinking=True, tol=0.001, verbose=False)
