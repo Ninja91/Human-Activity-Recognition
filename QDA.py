@@ -1,11 +1,11 @@
 #Author: Nitin A Jain
 
 import numpy as np
-from sklearn.neural_network import BernoulliRBM
+from sklearn.qda import QDA
 from MultiLayerPerceptron import *
 import common
 
-def MLA_onFullDataset():
+def QDA_onFullDataset():
     #Parsing Full training dataset
     XFull = common.parseFile('../UCI HAR Dataset/train/X_train.txt')
     YFull = common.parseFile('../UCI HAR Dataset/train/y_train.txt')
@@ -14,15 +14,15 @@ def MLA_onFullDataset():
     XFullTest = common.parseFile('../UCI HAR Dataset/test/X_test.txt')
     YFullTest = common.parseFile('../UCI HAR Dataset/test/y_test.txt')
 
-    #Fitting data using MLA classifier
-    clf = MLPClassifier()
+    #Fitting data using QDA classifier
+    clf = QDA()
     clf.fit(XFull, YFull.flatten())
 
     #Testing the results
     precision,recall,fscore = common.checkAccuracy(clf.predict(XFullTest),YFullTest,[1,2,3,4,5,6])
     print fscore
 
-def MLA_onNonDynamicData():
+def QDA_onNonDynamicData():
     #Parsing Full training dataset
     XFull = common.parseFile('../UCI HAR Dataset/train/X_train.txt')
     YFull = common.parseFile('../UCI HAR Dataset/train/y_train.txt')
@@ -36,9 +36,9 @@ def MLA_onNonDynamicData():
     #Getting the dataset associated with Non-Dynamic Activities on testing
     X_NonDynamicTest,Y_NonDynamicTest = common.getDataSubset(XFullTest,YFullTest.flatten(),[4,5,6])
 
-    #Fitting data using MLA classifier
+    #Fitting data using QDA classifier
 
-    clf = MLPClassifier()
+    clf = QDA()
     clf.fit(X_NonDynamic, Y_NonDynamic.flatten())
 
     precision,recall,fscore = common.checkAccuracy(clf.predict(X_NonDynamicTest),Y_NonDynamicTest,[4,5,6])
@@ -51,8 +51,8 @@ def MLA_onNonDynamicData():
     X_DynamicTest,Y_DynamicTest = common.getDataSubset(XFullTest,YFullTest.flatten(),[1,2,3])
     print len(X_DynamicTest),len(Y_DynamicTest)
 
-    #Fitting data using MLA classifier
-    clf = MLPClassifier()
+    #Fitting data using QDA classifier
+    clf = QDA()
     clf.fit(X_Dynamic, Y_Dynamic.flatten())
 
     precision,recall,fscore = common.checkAccuracy(clf.predict(X_DynamicTest),Y_DynamicTest,[1,2,3])
@@ -61,5 +61,5 @@ def MLA_onNonDynamicData():
     print fscore
 
 if __name__=='__main__':
-    MLA_onFullDataset()
-    MLA_onNonDynamicData()
+    QDA_onFullDataset()
+    QDA_onNonDynamicData()
