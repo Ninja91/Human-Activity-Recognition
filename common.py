@@ -4,6 +4,7 @@
 import numpy as np
 from sklearn import neighbors, datasets
 from collections import defaultdict
+import scipy
 
 ###################################################################################
 ## Given a file name, returns the parsed file in the form of an array ##
@@ -134,11 +135,43 @@ def getMahalanobisDistance( X_train, Y_train, labels ):
 
 def getDistribution( X_train, Y_train, label ):
 
-	X_A , Y_A = getDataSubset(X_train, Y_train, label)
+	X_A , Y_A = getDataSubset(X_train, Y_train, [label])
 	mean_A = np.mean(X_A,axis = 0)
 	cov_A = np.cov(X_A,rowvar = 0)
 
 	return mean_A,cov_A 
+
+#############################################################################
+
+#This function returns the sample weights based on HOW CLOSE THE SAMPLE IS TO THE MEAN OF IT'S CLASS
+
+def getSampleWeights( X_train, Y_train):
+	
+	sample_weights = []
+	mean = []
+	cov = []
+
+	for i in range(1,7):
+		
+		mean_A , cov_A = getDistribution( X_train , Y_train , i )
+
+		mean.append( mean_A )
+		
+		cov.append( cov_A )	
+
+		
+	for i in xrange( len(X_train) ):
+
+		this_mean = mean[ int(Y_train[i]) -1 ]
+		this_cov = cov[ int(Y_train[i]) -1 ]
+
+		weight = 	scipy.spatial.distance.mahalanobis(X_train[i], this_mean , this_cov)	
+
+		weight = float(1) / weight
+
+		sample_weights.append( weight )		
+				
+	return np.asarray(sample_weights)
 	
 #############################################################################
 
@@ -162,6 +195,7 @@ def getPowerK( X_features, k):
 	return np.asarray(X_features_new)
 	
 #############################################################################
+
 
 
 
