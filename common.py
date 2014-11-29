@@ -245,8 +245,8 @@ def getValidationDataset(X_full,Y_full,labels = [1,2,3,4,5,6],splitRatio = 3):
 ###################################################################################
 ## Returns the parsed file in the form of an array containing only Accelero features##
 
-def getAccFeatures( file_name =  '../UCI HAR Dataset/train/X_train.txt'):
-    f = open('../UCI HAR Dataset/features.txt')
+def getAccFeatures( X_train, features_file = '../UCI HAR Dataset/features.txt'):
+    f = open(features_file)
     lines = f.readlines()
     AccFeaturesList = []
     i = 0
@@ -255,26 +255,16 @@ def getAccFeatures( file_name =  '../UCI HAR Dataset/train/X_train.txt'):
         i = i + 1
     f.close()
 
-    f = open(file_name)
-    featureArray = []
-    lines = f.readlines()
-    for line in lines:
-        feature_length = len(line.split(" "))
-        raw_feature = line.split(" ")
-        feature = []
-        for index in AccFeaturesList:
-            try:
-                feature.append( float( raw_feature[index] ))
-            except: 
-                continue
-        featureArray.append( feature )
-    return np.asarray( featureArray )
+    features = []
+    for index in AccFeaturesList:
+        features.append( X_train[:,index])
+    return np.asarray(features)
 
 ###################################################################################
 ## Returns the parsed file in the form of an array containing only Gyro features##
 
-def getGyroFeatures( file_name =  '../UCI HAR Dataset/train/X_train.txt'):
-    f = open('../UCI HAR Dataset/features.txt')
+def getGyroFeatures( file_name =  '../UCI HAR Dataset/train/X_train.txt',feature_file='../UCI HAR Dataset/features.txt'):
+    f = open(feature_file)
     lines = f.readlines()
     GyroFeaturesList = []
     i = 0
@@ -283,17 +273,7 @@ def getGyroFeatures( file_name =  '../UCI HAR Dataset/train/X_train.txt'):
         i = i + 1
     f.close()
 
-    f = open(file_name)
-    featureArray = []
-    lines = f.readlines()
-    for line in lines:
-        feature_length = len(line.split(" "))
-        raw_feature = line.split(" ")
-        feature = []
-        for index in GyroFeaturesList:
-            try:
-                feature.append( float( raw_feature[index] ))
-            except: 
-                continue
-        featureArray.append( feature )
-    return np.asarray( featureArray )
+    features = []
+    for index in GyroFeaturesList:
+        features.append( X_train[:,index])
+    return np.asarray(features)
