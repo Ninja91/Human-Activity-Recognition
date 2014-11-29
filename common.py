@@ -258,7 +258,8 @@ def getAccFeatures( X_train, features_file = '../UCI HAR Dataset/features.txt'):
     features = []
     for index in AccFeaturesList:
         features.append( X_train[:,index])
-    return np.asarray(features)
+
+    return np.transpose(np.asarray(features))
 
 ###################################################################################
 ## Returns the parsed file in the form of an array containing only Gyro features##
@@ -276,4 +277,4 @@ def getGyroFeatures( X_train,feature_file='../UCI HAR Dataset/features.txt'):
     features = []
     for index in GyroFeaturesList:
         features.append( X_train[:,index])
-    return np.asarray(features)
+    return np.transpose(np.asarray(features))
