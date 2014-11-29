@@ -263,7 +263,7 @@ def getAccFeatures( X_train, features_file = '../UCI HAR Dataset/features.txt'):
 ###################################################################################
 ## Returns the parsed file in the form of an array containing only Gyro features##
 
-def getGyroFeatures( file_name =  '../UCI HAR Dataset/train/X_train.txt',feature_file='../UCI HAR Dataset/features.txt'):
+def getGyroFeatures( X_train,feature_file='../UCI HAR Dataset/features.txt'):
     f = open(feature_file)
     lines = f.readlines()
     GyroFeaturesList = []
