@@ -62,4 +62,4 @@ def MLP_onNonDynamicData():
 
 if __name__=='__main__':
     MLP_onFullDataset()
-    #MLP_onNonDynamicData()
+    MLP_onNonDynamicData()

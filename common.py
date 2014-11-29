@@ -197,3 +197,103 @@ def getPowerK( X_features, k):
 	return np.asarray(X_features_new)
 	
 #############################################################################
+#returns a validation and training dataset from the full datatset sent as input parameters
+
+def getValidationDataset(X_full,Y_full,labels = [1,2,3,4,5,6],splitRatio = 3):
+    fullDatasetSize = 7352
+    
+    
+
+    if (len(X_full) != len(Y_full)) and (len(Y_full) !=fullDatasetSize):
+        print "Error: Not the full dataset or X and Y are unequal"
+    else:
+        indexLists = dict()
+        for i in labels:
+            indexLists[i] = []
+        for j in xrange(fullDatasetSize):
+            if Y_full[j] in labels:
+                indexLists[Y_full[j]].append(j)
+        for i in labels: print len(indexLists[i])
+
+        X_d = []
+        Y_d = []
+        X_v = []
+        Y_v = []
+        for j in labels:
+            datasetSizeforLabel = len(indexLists[j])
+            ValidationDatasetSizeforLabel = datasetSizeforLabel/(splitRatio + 1)
+            print datasetSizeforLabel,ValidationDatasetSizeforLabel
+            taken = []
+            for i in xrange(ValidationDatasetSizeforLabel):
+                from random import randint
+                while True: 
+                    rand = randint(0,datasetSizeforLabel)
+                    if rand not in taken: 
+                        taken.append(rand)
+                        break
+            print len(taken)
+            for i in xrange(datasetSizeforLabel):
+                if indexLists[j][i] in taken:
+                    X_v.append(X_full[indexLists[j][i],:])
+                    Y_v.append(Y_full[indexLists[j][i]])
+                else:
+                    X_d.append(X_full[indexLists[j][i],:])
+                    Y_d.append(Y_full[indexLists[j][i]])
+
+    return np.asarray(X_v),np.asarray(Y_v),np.asarray(X_d),np.asarray(Y_d)
+
+###################################################################################
+## Returns the parsed file in the form of an array containing only Accelero features##
+
+def getAccFeatures( file_name =  '../UCI HAR Dataset/train/X_train.txt'):
+    f = open('../UCI HAR Dataset/features.txt')
+    lines = f.readlines()
+    AccFeaturesList = []
+    i = 0
+    for line in lines:
+        if not 'Gyro' in line : AccFeaturesList.append(i)
+        i = i + 1
+    f.close()
+
+    f = open(file_name)
+    featureArray = []
+    lines = f.readlines()
+    for line in lines:
+        feature_length = len(line.split(" "))
+        raw_feature = line.split(" ")
+        feature = []
+        for index in AccFeaturesList:
+            try:
+                feature.append( float( raw_feature[index] ))
+            except: 
+                continue
+        featureArray.append( feature )
+    return np.asarray( featureArray )
+
+###################################################################################
+## Returns the parsed file in the form of an array containing only Gyro features##
+
+def getGyroFeatures( file_name =  '../UCI HAR Dataset/train/X_train.txt'):
+    f = open('../UCI HAR Dataset/features.txt')
+    lines = f.readlines()
+    GyroFeaturesList = []
+    i = 0
+    for line in lines:
+        if not 'Acc' in line : GyroFeaturesList.append(i)
+        i = i + 1
+    f.close()
+
+    f = open(file_name)
+    featureArray = []
+    lines = f.readlines()
+    for line in lines:
+        feature_length = len(line.split(" "))
+        raw_feature = line.split(" ")
+        feature = []
+        for index in GyroFeaturesList:
+            try:
+                feature.append( float( raw_feature[index] ))
+            except: 
+                continue
+        featureArray.append( feature )
+    return np.asarray( featureArray )
