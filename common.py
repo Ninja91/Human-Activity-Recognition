@@ -231,14 +231,18 @@ def getValidationDataset(X_full,Y_full,labels = [1,2,3,4,5,6],splitRatio = 3):
                     if rand not in taken: 
                         taken.append(rand)
                         break
-            print len(taken)
+            print taken
+            print indexLists[j]
+            cnt = 0
             for i in xrange(datasetSizeforLabel):
-                if indexLists[j][i] in taken:
+                if i in taken:
+                    cnt = cnt +1 
                     X_v.append(X_full[indexLists[j][i],:])
                     Y_v.append(Y_full[indexLists[j][i]])
                 else:
                     X_d.append(X_full[indexLists[j][i],:])
-                    Y_d.append(Y_full[indexLists[j][i]])
+                    Y_d.append(Y_full[indexLists[j][i]])    
+            print cnt
 
     return np.asarray(X_v),np.asarray(Y_v),np.asarray(X_d),np.asarray(Y_d)
 
