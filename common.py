@@ -102,10 +102,12 @@ def createConfusionMatrix(predictedYLabels,originalYLabels,labelList):
 
     if len(originalYLabels) != len(predictedYLabels):
         print 'Error'
+        return
 
     for i in xrange(len(originalYLabels)):
         if (predictedYLabels[i] not in labelList) or (originalYLabels[i] not in labelList):
             print 'Error'
+            return
         else:
             confusionMatrix[labelList.index(originalYLabels[i]),labelList.index(predictedYLabels[i])] = confusionMatrix[labelList.index(originalYLabels[i]),labelList.index(predictedYLabels[i])] + 1
     return confusionMatrix
@@ -201,11 +203,9 @@ def getPowerK( X_features, k):
 
 def getValidationDataset(X_full,Y_full,labels = [1,2,3,4,5,6],splitRatio = 3):
     fullDatasetSize = 7352
-    
-    
-
     if (len(X_full) != len(Y_full)) and (len(Y_full) !=fullDatasetSize):
         print "Error: Not the full dataset or X and Y are unequal"
+        return
     else:
         indexLists = dict()
         for i in labels:
