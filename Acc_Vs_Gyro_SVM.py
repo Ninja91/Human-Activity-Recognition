@@ -44,5 +44,3 @@ Y_predict=clf.predict(X_test)
 # Check and print accuracy
 prec, rec, f_score = common.checkAccuracy(Y_test, Y_predict, [4,5,6]) 
 print f_score
-
-

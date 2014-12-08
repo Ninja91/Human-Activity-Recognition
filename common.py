@@ -244,7 +244,28 @@ def getValidationDataset(X_full,Y_full,labels = [1,2,3,4,5,6],splitRatio = 3):
                     Y_d.append(Y_full[indexLists[j][i]])    
             print cnt
 
-    return np.asarray(X_v),np.asarray(Y_v),np.asarray(X_d),np.asarray(Y_d)
+    #return np.asarray(X_v),np.asarray(Y_v),np.asarray(X_d),np.asarray(Y_d)
+    f = open('X_Validation.txt','w+')
+    #f.write(X_v)
+    np.savetxt(f,X_v)
+    #np.save(f,np.asarray(X_v))
+    f.close()
+    f = open('Y_Validation.txt','w+')
+    np.savetxt(f,Y_v)
+    #np.save(f,np.asarray(Y_v))
+    f.close()
+    f = open('X_training.txt','w+')
+    #np.save(f,np.asarray(X_d))
+    #f.write(X_d)
+    np.savetxt(f,X_d)
+    f.close()
+    f = open('Y_training.txt','w+')
+    #np.save(f,np.asarray(Y_d))
+    #f.write(Y_d)
+    np.savetxt(f,Y_d)
+    f.close()
+
+    
 
 ###################################################################################
 ## Returns the parsed file in the form of an array containing only Accelero features##
