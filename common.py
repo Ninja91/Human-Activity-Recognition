@@ -303,3 +303,15 @@ def getGyroFeatures( X_train,feature_file='../UCI HAR Dataset/features.txt'):
     for index in GyroFeaturesList:
         features.append( X_train[:,index])
     return np.transpose(np.asarray(features))
+
+##################################################################################
+## returns data for requested subjects
+def getSubjectData(inputXData,inputYData,requiredSubjects,subjectData = None):
+    requiredSubjectDataIndexList = []
+    if subjectData is None:
+        subjectData = parseFile('../UCI HAR Dataset/train/subject_train.txt')
+    
+    for i in xrange(len(subjectData)):
+        if int(subjectData[i]) in requiredSubjects:
+            requiredSubjectDataIndexList.append(i);
+    return inputXData[requiredSubjectDataIndexList,:], inputYData[requiredSubjectDataIndexList],subjectData[requiredSubjectDataIndexList]
