@@ -19,8 +19,18 @@ def LinearSVC_onData():
     X_DynamicTest,Y_DynamicTest = common.getDataSubset(XFullTest,YFullTest.flatten(),[1,2,3,4,5,6])
 
     #Fitting data using LinearSVC classifier
+    clf = LinearSVC(multi_class='crammer_singer')
+    clf.fit(X_Dynamic, Y_Dynamic.flatten())
+
+    precision,recall,fscore = common.checkAccuracy(clf.predict(X_Dynamic),Y_Dynamic,[1,2,3,4,5,6])
+    print common.createConfusionMatrix(clf.predict(X_Dynamic).flatten(),Y_Dynamic.flatten(),[1,2,3,4,5,6])
+
+    #Fitting data using LinearSVC classifier
     clf = SVC(kernel = "linear")
     clf.fit(X_Dynamic, Y_Dynamic.flatten())
+    
+    precision,recall,fscore = common.checkAccuracy(clf.predict(X_Dynamic),Y_Dynamic,[1,2,3,4,5,6])
+    print common.createConfusionMatrix(clf.predict(X_Dynamic).flatten(),Y_Dynamic.flatten(),[1,2,3,4,5,6])
 
     precision,recall,fscore = common.checkAccuracy(clf.predict(X_DynamicTest),Y_DynamicTest,[1,2,3,4,5,6])
     print common.createConfusionMatrix(clf.predict(X_DynamicTest).flatten(),Y_DynamicTest.flatten(),[1,2,3,4,5,6])
@@ -463,5 +473,5 @@ def LinearSVC_onGyroData():
 
 if __name__=='__main__':
     LinearSVC_onData()
-    LinearSVC_onAccData()
-    LinearSVC_onGyroData()
+    #LinearSVC_onAccData()
+    #LinearSVC_onGyroData()
